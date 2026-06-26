@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dagon AI - Advanced Conversational AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 150px 2rem 100px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        section:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-block code {
+            color: #abb2bf;
+        }
+
+        .highlight {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        .api-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .api-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .api-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .installation-steps {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .step {
+            margin: 1.5rem 0;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .step:before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        .coming-soon {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🤖 Dagon AI</div>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#github">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Dagon AI</h1>
+            <p>Advanced Conversational AI Inspired by Meta</p>
+            <p style="font-size: 1.1rem; opacity: 0.8;">Natural Language Understanding • Personality Traits • Knowledge Management • REST API</p>
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="window.location.href='#installation'">Get Started</button>
+                <button class="btn btn-secondary" onclick="window.location.href='https://github.com/jayravey3-lang/Dagon-'">View on GitHub</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <h2>✨ Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🧠 Conversational AI</h3>
+                    <p>Natural language understanding and generation using transformer models for meaningful conversations.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💾 Memory System</h3>
+                    <p>Store and recall previous interactions, user preferences, and conversation history.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎭 Personality Traits</h3>
+                    <p>Adjustable personality (helpfulness, creativity, empathy, humor, formality) for personalized interactions.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🧠 Intent Recognition</h3>
+                    <p>Identify user intents (greeting, question, request) and extract entities (emails, URLs).</p>
+                </div>
+                <div class="feature-card">
+                    <h3>😊 Sentiment Analysis</h3>
+                    <p>Analyze emotional tone and sentiment of user messages in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📚 Knowledge Base</h3>
+                    <p>Build and query custom domain knowledge with easy import/export functionality.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📊 Context Analysis</h3>
+                    <p>Determine conversation topics and maintain contextual awareness throughout interactions.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔌 REST API</h3>
+                    <p>Production-ready Flask API server with 8 endpoints for easy integration.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📈 Statistics</h3>
+                    <p>Track conversation metrics, sentiment trends, and user preferences over time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="installation">
+        <div class="container">
+            <h2>🚀 Quick Start</h2>
+            
+            <div class="installation-steps">
+                <div class="step" data-step="1">
+                    <strong>Clone the Repository</strong>
+                    <div class="code-block">
+                        <code>git clone https://github.com/jayravey3-lang/Dagon-.git<br>cd Dagon-</code>
+                    </div>
+                </div>
+
+                <div class="step" data-step="2">
+                    <strong>Create Virtual Environment</strong>
+                    <div class="code-block">
+                        <code>python -m venv venv<br>source venv/bin/activate  # On Windows: venv\Scripts\activate</code>
+                    </div>
+                </div>
+
+                <div class="step" data-step="3">
+                    <strong>Install Dependencies</strong>
+                    <div class="code-block">
+                        <code>pip install -r requirements.txt</code>
+                    </div>
+                </div>
+
+                <div class="step" data-step="4">
+                    <strong>Run Dagon AI</strong>
+                    <div class="code-block">
+                        <code># Basic Chat<br>python examples/basic_chat.py<br><br># Enhanced Chat<br>python examples/enhanced_chat.py<br><br># API Server<br>python -m dagon.server</code>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 3rem; color: #667eea;">Basic Usage Example</h3>
+            <div class="code-block">
+                <code><span style="color: #61afef;">from</span> dagon <span style="color: #61afef;">import</span> DagonAI<br><br><span style="color: #98c379;"># Initialize Dagon</span><br>dagon = DagonAI()<br><br><span style="color: #98c379;"># Have a conversation</span><br>response = dagon.chat(<span style="color: #98c379;">"Hello! What can you do?"</span>)<br><span style="color: #61afef;">print</span>(response)</code>
+            </div>
+
+            <h3 style="margin-top: 2rem; color: #667eea;">Advanced Usage</h3>
+            <div class="code-block">
+                <code><span style="color: #61afef;">from</span> dagon.enhanced <span style="color: #61afef;">import</span> EnhancedDagonAI<br><br><span style="color: #98c379;"># Initialize enhanced Dagon</span><br>dagon = EnhancedDagonAI()<br><br><span style="color: #98c379;"># Configure personality</span><br>dagon.set_personality_trait(<span style="color: #98c379;">"empathy"</span>, <span style="color: #d19a66;">0.95</span>)<br><br><span style="color: #98c379;"># Add knowledge</span><br>dagon.add_knowledge(<span style="color: #98c379;">"greeting"</span>, <span style="color: #98c379;">"response"</span>, <span style="color: #98c379;">"Hello!"</span>)<br><br><span style="color: #98c379;"># Get statistics</span><br>stats = dagon.get_statistics()</code>
+            </div>
+        </div>
+    </section>
+
+    <section id="api">
+        <div class="container">
+            <h2>🔌 REST API Endpoints</h2>
+            
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Start the API server with: <code style="background: #f0f0f0; padding: 0.3rem 0.8rem; border-radius: 3px;">python -m dagon.server</code></p>
+
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Endpoint</th>
+                        <th>Method</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/health</td>
+                        <td>GET</td>
+                        <td>Health check endpoint</td>
+                    </tr>
+                    <tr>
+                        <td>/chat</td>
+                        <td>POST</td>
+                        <td>Send a message and get a response</td>
+                    </tr>
+                    <tr>
+                        <td>/personality</td>
+                        <td>GET</td>
+                        <td>Get current personality profile</td>
+                    </tr>
+                    <tr>
+                        <td>/personality</td>
+                        <td>PUT</td>
+                        <td>Update personality trait</td>
+                    </tr>
+                    <tr>
+                        <td>/statistics</td>
+                        <td>GET</td>
+                        <td>Get conversation statistics</td>
+                    </tr>
+                    <tr>
+                        <td>/knowledge</td>
+                        <td>POST</td>
+                        <td>Add knowledge to knowledge base</td>
+                    </tr>
+                    <tr>
+                        <td>/memory</td>
+                        <td>GET</td>
+                        <td>Recall stored memories</td>
+                    </tr>
+                    <tr>
+                        <td>/reset</td>
+                        <td>POST</td>
+                        <td>Reset conversation</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 3rem; color: #667eea;">Example API Request</h3>
+            <div class="code-block">
+                <code><span style="color: #61afef;">curl</span> -X POST http://localhost:5000/chat \<br>&nbsp;&nbsp;-H <span style="color: #98c379;">"Content-Type: application/json"</span> \<br>&nbsp;&nbsp;-d <span style="color: #98c379;">'{"message": "Hello Dagon!"}'</span></code>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>📊 Project Statistics</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <h3>12</h3>
+                    <p>Python Modules</p>
+                </div>
+                <div class="stat-item">
+                    <h3>10+</h3>
+                    <p>Classes</p>
+                </div>
+                <div class="stat-item">
+                    <h3>8</h3>
+                    <p>API Endpoints</p>
+                </div>
+                <div class="stat-item">
+                    <h3>15+</h3>
+                    <p>Test Cases</p>
+                </div>
+                <div class="stat-item">
+                    <h3>2000+</h3>
+                    <p>Lines of Code</p>
+                </div>
+                <div class="stat-item">
+                    <h3>5</h3>
+                    <p>Personality Traits</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>🎯 Core Components</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>DagonAI</h3>
+                    <p>Main class for basic conversational AI with history management and context awareness.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>EnhancedDagonAI</h3>
+                    <p>Advanced version combining memory, personality, and NLP for intelligent interactions.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>DagonMemory</h3>
+                    <p>Memory management system with preference tracking and searchable memories.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>DagonPersonality</h3>
+                    <p>Trait management system for dynamic personality customization.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>DagonKnowledgeBase</h3>
+                    <p>Domain-based fact storage with import/export capabilities.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>NLP Utilities</h3>
+                    <p>Intent recognition, sentiment analysis, and context understanding tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>🛠️ Technology Stack</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Python 3.8+</h3>
+                    <p>Modern Python with type hints and async support.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Transformers</h3>
+                    <p>Hugging Face transformers for state-of-the-art NLP models.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>PyTorch</h3>
+                    <p>Deep learning framework for model inference.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Flask</h3>
+                    <p>Lightweight web framework for REST API development.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>NumPy</h3>
+                    <p>Numerical computing for data processing.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Python-dotenv</h3>
+                    <p>Environment variable management for configuration.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>🌟 Why Choose Dagon?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>✅ Production Ready</h3>
+                    <p>Fully tested and documented code ready for production deployment.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>✅ Extensible</h3>
+                    <p>Modular architecture makes it easy to extend and customize.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>✅ Well Documented</h3>
+                    <p>Comprehensive documentation with examples and use cases.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>✅ Easy Integration</h3>
+                    <p>Simple REST API for seamless integration into any application.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>✅ Full Test Suite</h3>
+                    <p>15+ test cases covering all major functionality.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>✅ Active Development</h3>
+                    <p>Regularly updated with new features and improvements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="github">
+        <div class="container">
+            <h2>📦 Get Started Now</h2>
+            <p style="text-align: center; font-size: 1.1rem; color: #666; margin: 2rem 0;">
+                Dagon AI is open-source and ready to use. Visit our GitHub repository to get started!
+            </p>
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="window.location.href='https://github.com/jayravey3-lang/Dagon-'">Star on GitHub</button>
+                <button class="btn btn-secondary" onclick="window.location.href='https://github.com/jayravey3-lang/Dagon-/blob/main/README.md'">Read Documentation</button>
+            </div>
+            
+            <div class="coming-soon">
+                <strong>🎯 Coming Soon:</strong> Web UI Dashboard, Database Persistence, Multi-language Support, Advanced Models
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Dagon AI. Created by jayravey3-lang</p>
+        <p style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8;">
+            <a href="https://github.com/jayravey3-lang/Dagon-" style="color: #667eea; text-decoration: none;">GitHub</a> • 
+            <a href="https://github.com/jayravey3-lang/Dagon-/blob/main/README.md" style="color: #667eea; text-decoration: none;">Docs</a> • 
+            <a href="https://github.com/jayravey3-lang/Dagon-/issues" style="color: #667eea; text-decoration: none;">Issues</a>
+        </p>
+        <p style="margin-top: 1rem;">🤖 Empowering conversations with intelligence</p>
+    </footer>
+</body>
+</html>
